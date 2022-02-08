@@ -20,8 +20,10 @@ public class LoginServlet extends HttpServlet {
 
         if (username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("password")) {
             resp.sendRedirect("/profile");
+        } else {
+            resp.sendRedirect("/login");
         }
-        System.out.println(username + " " + password);
+
 
 
     }
