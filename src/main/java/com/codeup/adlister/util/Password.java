@@ -12,4 +12,11 @@ public class Password {
     public static boolean check(String password, String hash) {
         return BCrypt.checkpw(password, hash);
     }
+
+    public static void main(String[] args) {
+        String dot = "password";
+        System.out.println("This is a hashed password \n");
+        System.out.println(hash(dot));
+    }
+
 }
