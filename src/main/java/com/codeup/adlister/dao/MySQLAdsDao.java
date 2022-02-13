@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySQLAdsDao implements Ads {
+    // the field is set to null initially
     private Connection connection = null;
 
     public MySQLAdsDao(Config config) {
@@ -28,14 +29,26 @@ public class MySQLAdsDao implements Ads {
 
     @Override
     public List<Ad> all() {
+        List<Ad> allAds = new ArrayList<>();
         Statement stmt = null;
         try {
             stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM ads");
-            return createAdsFromResults(rs);
+
+            while (rs.next()){
+                Ad newAd = new Ad(
+                        rs.getLong("id"),
+                        rs.getLong("user_id"),
+                        rs.getString("title"),
+                        rs.getString("description")
+                );
+                allAds.add(newAd);
+
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving all ads.", e);
         }
+        return allAds;
     }
 
     @Override
